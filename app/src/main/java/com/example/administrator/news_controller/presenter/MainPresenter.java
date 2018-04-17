@@ -7,21 +7,14 @@ import com.example.administrator.news_controller.NewsItem;
 import com.example.administrator.news_controller.model.INewsFromDbLoader;
 import com.example.administrator.news_controller.model.INewsLoader;
 import com.example.administrator.news_controller.model.NewsFromDbLoader;
-import com.example.administrator.news_controller.model.NewsLoader;
 import com.example.administrator.news_controller.view.MainView;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.Single;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import io.realm.Realm;
 
 public class MainPresenter extends BasePresenter<MainView> {
 
@@ -52,14 +45,20 @@ public class MainPresenter extends BasePresenter<MainView> {
         };
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        disposableSingleObserver.dispose();
+    }
+
     public void loadNews(){
-        Single<News> single = newsLoader.getNewsService().fetchNewsItems();
-        single.subscribeOn(Schedulers.io())
+        newsLoader.getNewsSingle()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess(new Consumer<News>() {
                     @Override
                     public void accept(News news) throws Exception {
-                        newsLoader.saveToDb(news);
+                        newsFromDbLoader.saveNewsToDb(news);
                     }
                 })
                 .subscribe(disposableSingleObserver);

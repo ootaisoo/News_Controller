@@ -23,7 +23,7 @@ public class NewsLoader implements INewsLoader {
     public static final String LOG_TAG = NewsLoader.class.getName();
 
     private Context context;
-    private final NewsLoader.NewsService newsService;
+    private final NewsService newsService;
 
     public NewsLoader(Context context) {
         this.context = context;
@@ -33,58 +33,16 @@ public class NewsLoader implements INewsLoader {
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 
-        newsService = retrofit.create(NewsLoader.NewsService.class);
+        newsService = retrofit.create(NewsService.class);
     }
 
-    public NewsService getNewsService() {
-        return newsService;
+    public Single<News> getNewsSingle() {
+        return newsService.fetchNewsItems();
     }
 
-    public interface NewsService{
+    public interface NewsService {
 
         @GET("rss/all")
         Single<News> fetchNewsItems();
     }
-
-    public void saveToDb(News news) {
-        final List<NewsItem> newsItems = news.getChannel().getNewsItems();
-        Realm realm = Realm.getDefaultInstance();
-                    realm.executeTransactionAsync(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            for (NewsItem newsItem : newsItems){
-                                realm.copyToRealmOrUpdate(newsItem);
-                                Log.e(LOG_TAG, newsItem.getUrl());
-                            }
-                        }
-                    });
-                    realm.close();
-    }
-
-//        call.enqueue(new Callback<News>() {
-//            @Override
-//            public void onResponse(Call<News> call, final Response<News> response) {
-//                if (response.isSuccessful()){
-//                    final List<NewsItem> newsItems = response.body().getChannel().getNewsItems();
-//                    listener.onLoaded(newsItems);
-//                    Realm realm = Realm.getDefaultInstance();
-//                    realm.executeTransactionAsync(new Realm.Transaction() {
-//                        @Override
-//                        public void execute(Realm realm) {
-//                            for (NewsItem newsItem : newsItems){
-//                                realm.copyToRealmOrUpdate(newsItem);
-//                                Log.e(LOG_TAG, newsItem.getUrl());
-//                            }
-//                        }
-//                    });
-//                    realm.close();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<News> call, Throwable t) {
-//                Log.e(LOG_TAG, t.toString());
-//            }
-//        });
-//    }
 }

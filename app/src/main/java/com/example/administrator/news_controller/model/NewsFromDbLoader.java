@@ -41,4 +41,19 @@ public class NewsFromDbLoader implements INewsFromDbLoader {
             listener.onLoaded(newsItems);
         }
     }
+
+    public void saveNewsToDb(News news) {
+        final List<NewsItem> newsItems = news.getChannel().getNewsItems();
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                for (NewsItem newsItem : newsItems) {
+                    realm.copyToRealmOrUpdate(newsItem);
+                    Log.e(LOG_TAG, newsItem.getUrl());
+                }
+            }
+        });
+        realm.close();
+    }
 }

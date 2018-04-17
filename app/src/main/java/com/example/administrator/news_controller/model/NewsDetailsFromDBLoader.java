@@ -30,7 +30,7 @@ public class NewsDetailsFromDBLoader implements INewsDetailsFromDBLoader {
         void onLoaded(Root root);
     }
 
-    public void loadNewsDetailsFromDb(String newsPath, DetailsFromDbListener listener){
+    public void loadDetailsFromDb(String newsPath, DetailsFromDbListener listener){
         Realm realm = Realm.getDefaultInstance();
         try {
             RealmResults<Root> result = realm.where(Root.class).equalTo("url", newsPath).findAllAsync();
@@ -41,5 +41,16 @@ public class NewsDetailsFromDBLoader implements INewsDetailsFromDBLoader {
         } finally {
             realm.close();
         }
+    }
+
+    public void saveDetailsToDb(final Root root){
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.copyToRealmOrUpdate(root);
+            }
+        });
+        realm.close();
     }
 }
