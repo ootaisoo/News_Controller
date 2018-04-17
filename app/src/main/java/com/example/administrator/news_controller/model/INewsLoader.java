@@ -1,5 +1,10 @@
 package com.example.administrator.news_controller.model;
 
+import com.example.administrator.news_controller.News;
+
+import io.reactivex.Single;
+
 public interface INewsLoader {
-    void loadNews(final NewsLoader.NewsListener listener);
+    NewsLoader.NewsService getNewsService();
+    void saveToDb(News news);
 }
