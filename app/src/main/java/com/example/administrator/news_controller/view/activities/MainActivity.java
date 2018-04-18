@@ -11,10 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.example.administrator.news_controller.NewsItem;
+import com.example.administrator.news_controller.model.entities.NewsItem;
 import com.example.administrator.news_controller.R;
-import com.example.administrator.news_controller.model.NewsFromDbLoader;
-import com.example.administrator.news_controller.model.NewsLoader;
+import com.example.administrator.news_controller.model.loaders.NewsFromDbLoader;
+import com.example.administrator.news_controller.model.loaders.NewsLoader;
 import com.example.administrator.news_controller.presenter.MainPresenter;
 import com.example.administrator.news_controller.view.MainView;
 import com.example.administrator.news_controller.view.adapters.NewsAdapter;

@@ -12,10 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.news_controller.R;
-import com.example.administrator.news_controller.Root;
+import com.example.administrator.news_controller.model.entities.Root;
 import com.example.administrator.news_controller.UrlUtils;
-import com.example.administrator.news_controller.model.NewsDetailsFromDBLoader;
-import com.example.administrator.news_controller.model.NewsDetailsLoader;
+import com.example.administrator.news_controller.model.loaders.NewsDetailsFromDBLoader;
+import com.example.administrator.news_controller.model.loaders.NewsDetailsLoader;
 import com.example.administrator.news_controller.presenter.NewsPresenter;
 import com.example.administrator.news_controller.view.NewsView;
 

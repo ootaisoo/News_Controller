@@ -1,6 +1,6 @@
-package com.example.administrator.news_controller.model;
+package com.example.administrator.news_controller.model.loaders;
 
-import com.example.administrator.news_controller.Root;
+import com.example.administrator.news_controller.model.entities.Root;
 
 import io.realm.Realm;
 import io.realm.RealmResults;

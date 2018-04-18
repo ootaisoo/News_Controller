@@ -1,4 +1,4 @@
-package com.example.administrator.news_controller;
+package com.example.administrator.news_controller.model.entities;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;

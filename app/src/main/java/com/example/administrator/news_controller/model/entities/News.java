@@ -1,4 +1,6 @@
-package com.example.administrator.news_controller;
+package com.example.administrator.news_controller.model.entities;
+
+import com.example.administrator.news_controller.model.entities.Channel;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

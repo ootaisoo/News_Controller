@@ -1,6 +1,6 @@
-package com.example.administrator.news_controller.model;
+package com.example.administrator.news_controller.model.loaders;
 
-import com.example.administrator.news_controller.DetailedNews;
+import com.example.administrator.news_controller.model.entities.DetailedNews;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

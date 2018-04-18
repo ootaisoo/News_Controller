@@ -1,6 +1,6 @@
-package com.example.administrator.news_controller.model;
+package com.example.administrator.news_controller.model.loaders;
 
-import com.example.administrator.news_controller.News;
+import com.example.administrator.news_controller.model.entities.News;
 
 import io.reactivex.Single;
 import retrofit2.Retrofit;

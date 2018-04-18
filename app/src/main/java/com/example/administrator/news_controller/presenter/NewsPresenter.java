@@ -2,11 +2,11 @@ package com.example.administrator.news_controller.presenter;
 
 import android.util.Log;
 
-import com.example.administrator.news_controller.DetailedNews;
-import com.example.administrator.news_controller.Root;
-import com.example.administrator.news_controller.model.INewsDetailsFromDBLoader;
-import com.example.administrator.news_controller.model.INewsDetailsLoader;
-import com.example.administrator.news_controller.model.NewsDetailsFromDBLoader;
+import com.example.administrator.news_controller.model.entities.DetailedNews;
+import com.example.administrator.news_controller.model.entities.Root;
+import com.example.administrator.news_controller.model.loaders.INewsDetailsFromDBLoader;
+import com.example.administrator.news_controller.model.loaders.INewsDetailsLoader;
+import com.example.administrator.news_controller.model.loaders.NewsDetailsFromDBLoader;
 import com.example.administrator.news_controller.view.NewsView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;

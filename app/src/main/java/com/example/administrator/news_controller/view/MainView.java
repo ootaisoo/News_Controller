@@ -1,6 +1,6 @@
 package com.example.administrator.news_controller.view;
 
-import com.example.administrator.news_controller.NewsItem;
+import com.example.administrator.news_controller.model.entities.NewsItem;
 
 import java.util.List;
 

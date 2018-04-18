@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.administrator.news_controller.NewsItem;
+import com.example.administrator.news_controller.model.entities.NewsItem;
 import com.example.administrator.news_controller.R;
 import com.example.administrator.news_controller.UrlUtils;
 
@@ -57,7 +57,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         holder.title.setText(newsItem.getTitle());
         holder.newsPath = newsPath;
-        holder.description.setText(newsItem.getDescription());
         holder.imageURL = newsItem.getImageUrl();
         if (newsItem.getImageUrl() != null) {
             UrlUtils.setImageFromUrl(context, holder.image, newsItem.getImageUrl());
@@ -76,14 +75,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         String newsPath;
         private ImageView image;
         private TextView title;
-        private TextView description;
         String imageURL;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
             title = itemView.findViewById(R.id.title);
-            description = itemView.findViewById(R.id.description);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -2,11 +2,11 @@ package com.example.administrator.news_controller.presenter;
 
 import android.util.Log;
 
-import com.example.administrator.news_controller.News;
-import com.example.administrator.news_controller.NewsItem;
-import com.example.administrator.news_controller.model.INewsFromDbLoader;
-import com.example.administrator.news_controller.model.INewsLoader;
-import com.example.administrator.news_controller.model.NewsFromDbLoader;
+import com.example.administrator.news_controller.model.entities.News;
+import com.example.administrator.news_controller.model.entities.NewsItem;
+import com.example.administrator.news_controller.model.loaders.INewsFromDbLoader;
+import com.example.administrator.news_controller.model.loaders.INewsLoader;
+import com.example.administrator.news_controller.model.loaders.NewsFromDbLoader;
 import com.example.administrator.news_controller.view.MainView;
 
 import java.util.List;

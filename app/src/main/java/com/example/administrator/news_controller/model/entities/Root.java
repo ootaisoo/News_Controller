@@ -1,5 +1,6 @@
-package com.example.administrator.news_controller;
+package com.example.administrator.news_controller.model.entities;
 
+import com.example.administrator.news_controller.model.entities.Content;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
