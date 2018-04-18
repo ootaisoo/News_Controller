@@ -8,12 +8,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.example.administrator.news_controller.News;
 import com.example.administrator.news_controller.NewsItem;
 import com.example.administrator.news_controller.R;
 import com.example.administrator.news_controller.model.NewsFromDbLoader;
@@ -36,13 +33,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
     @Override
     protected void inject() {
         setPresenter(new MainPresenter(this,
-                new NewsLoader(this),
-                new NewsFromDbLoader(this)));
+                new NewsLoader(),
+                new NewsFromDbLoader()));
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.e(LOG_TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -90,16 +86,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainVie
 
     public void onNewsLoaded(List<NewsItem> news){
         progressBar.setVisibility(View.GONE);
+        newsAdapter.clear();
         newsAdapter.addAll(news);
     }
-
-
 
     @Override
     public void onNewsSelected(String newsPath) {
         Intent newsActivityIntent = new Intent(this, NewsActivity.class);
         newsActivityIntent.putExtra("newsPath", newsPath);
-
         startActivity(newsActivityIntent);
     }
 }

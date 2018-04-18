@@ -2,17 +2,15 @@ package com.example.administrator.news_controller.view.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.administrator.news_controller.News;
 import com.example.administrator.news_controller.NewsItem;
 import com.example.administrator.news_controller.R;
-import com.example.administrator.news_controller.Utils;
+import com.example.administrator.news_controller.UrlUtils;
 
 import java.net.URL;
 import java.util.List;
@@ -21,13 +19,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     public static final String LOG_TAG = NewsAdapter.class.getName();
 
-    private List<NewsItem> feedItems;
+    private List<NewsItem> newsItems;
     private NewsSelectedListener listener;
     private Context context;
 
-    public NewsAdapter(List<NewsItem> feedItems, Context context, NewsSelectedListener listener) {
+    public NewsAdapter(List<NewsItem> newsItems, Context context, NewsSelectedListener listener) {
         this.listener = listener;
-        this.feedItems = feedItems;
+        this.newsItems = newsItems;
         this.context = context;
     }
 
@@ -37,24 +35,24 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     @Override
     public int getItemCount() {
-        return feedItems.size();
-    }
-
-    public void clear() {
-        feedItems.clear();
-        notifyDataSetChanged();
+        return newsItems.size();
     }
 
     public void addAll(List<NewsItem> list) {
-        feedItems.addAll(list);
+        newsItems.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        newsItems.clear();
         notifyDataSetChanged();
     }
 
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
-        NewsItem newsItem = feedItems.get(position);
+        NewsItem newsItem = newsItems.get(position);
 
-        URL newsUrl = Utils.parseUrl(newsItem.getUrl());
+        URL newsUrl = UrlUtils.parseUrl(newsItem.getUrl());
         String newsPath = newsUrl.getPath().substring(1);
 
         holder.title.setText(newsItem.getTitle());
@@ -62,7 +60,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.description.setText(newsItem.getDescription());
         holder.imageURL = newsItem.getImageUrl();
         if (newsItem.getImageUrl() != null) {
-            Utils.setImageFromUrl(context, holder.image, newsItem.getImageUrl());
+            UrlUtils.setImageFromUrl(context, holder.image, newsItem.getImageUrl());
         } else {
             holder.image.setVisibility(View.GONE);
         }

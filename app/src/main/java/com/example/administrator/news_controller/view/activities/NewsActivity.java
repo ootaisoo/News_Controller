@@ -7,15 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.text.Html;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.administrator.news_controller.DetailedNews;
 import com.example.administrator.news_controller.R;
 import com.example.administrator.news_controller.Root;
-import com.example.administrator.news_controller.Utils;
+import com.example.administrator.news_controller.UrlUtils;
 import com.example.administrator.news_controller.model.NewsDetailsFromDBLoader;
 import com.example.administrator.news_controller.model.NewsDetailsLoader;
 import com.example.administrator.news_controller.presenter.NewsPresenter;
@@ -28,8 +26,8 @@ public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsVie
     @Override
     protected void inject() {
         setPresenter(new NewsPresenter(this,
-                new NewsDetailsLoader(this),
-                new NewsDetailsFromDBLoader(this)));
+                new NewsDetailsLoader(),
+                new NewsDetailsFromDBLoader()));
     }
 
     @Override
@@ -53,14 +51,13 @@ public class NewsActivity extends BaseActivity<NewsPresenter> implements NewsVie
     }
 
     @Override
-    public void addDetailedNewsItem(Root detailedNews) {
+    public void addDetailedNewsItem(Root root) {
         TextView titleTextView = findViewById(R.id.news_title);
-        titleTextView.setText(detailedNews.getTitle());
+        titleTextView.setText(root.getTitle());
         TextView newsBodyTextView = findViewById(R.id.news_body);
-        newsBodyTextView.setText(Html.fromHtml(detailedNews.getContent().getBody()));
+        newsBodyTextView.setText(Html.fromHtml(root.getContent().getBody()));
         ImageView newsImageView = findViewById(R.id.news_image);
-        Utils.setImageFromUrl(this, newsImageView, "http://meduza.io/" + detailedNews.getShareImage());
-        Log.e(LOG_TAG, String.valueOf(detailedNews.getShareImage()));
+        UrlUtils.setImageFromUrl(this, newsImageView, "http://meduza.io/" + root.getShareImage());
     }
 
     private boolean isNetworkConnected() {

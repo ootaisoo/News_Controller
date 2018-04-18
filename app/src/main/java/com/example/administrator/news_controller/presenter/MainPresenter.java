@@ -22,7 +22,6 @@ public class MainPresenter extends BasePresenter<MainView> {
 
     private INewsLoader newsLoader;
     private INewsFromDbLoader newsFromDbLoader;
-    private DisposableSingleObserver<News> disposableSingleObserver;
 
     public MainPresenter(MainView view,
                          INewsLoader newsLoader,
@@ -30,38 +29,31 @@ public class MainPresenter extends BasePresenter<MainView> {
         super(view);
         this.newsLoader = newsLoader;
         this.newsFromDbLoader = newsFromDbLoader;
-
-        disposableSingleObserver = new DisposableSingleObserver<News>() {
-            @Override
-            public void onSuccess(News news) {
-                List<NewsItem> newsItems = news.getChannel().getNewsItems();
-                getView().onNewsLoaded(newsItems);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e(LOG_TAG, e.toString());
-            }
-        };
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        disposableSingleObserver.dispose();
     }
 
     public void loadNews(){
         newsLoader.getNewsSingle()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSuccess(new Consumer<News>() {
-                    @Override
-                    public void accept(News news) throws Exception {
-                        newsFromDbLoader.saveNewsToDb(news);
-                    }
-                })
-                .subscribe(disposableSingleObserver);
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSuccess(new Consumer<News>() {
+                @Override
+                public void accept(News news) throws Exception {
+                    newsFromDbLoader.saveNewsToDb(news.getChannel().getNewsItems());
+                }
+            })
+            .subscribe(new DisposableSingleObserver<News>() {
+                @Override
+                public void onSuccess(News news) {
+                    getView().onNewsLoaded(news.getChannel().getNewsItems());
+                    this.dispose();
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    Log.e(LOG_TAG, e.toString());
+                    this.dispose();
+                }
+            });
     }
 
     public void loadNewsFromDb(){

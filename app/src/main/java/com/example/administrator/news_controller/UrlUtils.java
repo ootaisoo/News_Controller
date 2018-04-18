@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Utils {
+public class UrlUtils {
 
     public static void setImageFromUrl(Context context, ImageView imageView, String url) {
         if (url != null) {

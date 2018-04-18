@@ -1,6 +1,5 @@
 package com.example.administrator.news_controller.view;
 
-import com.example.administrator.news_controller.News;
 import com.example.administrator.news_controller.NewsItem;
 
 import java.util.List;

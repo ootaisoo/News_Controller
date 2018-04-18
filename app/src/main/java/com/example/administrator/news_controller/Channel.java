@@ -1,9 +1,7 @@
 package com.example.administrator.news_controller;
 
-import org.simpleframework.xml.*;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
-
-import java.util.List;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;

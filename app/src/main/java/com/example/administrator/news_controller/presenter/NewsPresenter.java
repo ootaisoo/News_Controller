@@ -20,7 +20,6 @@ public class NewsPresenter extends BasePresenter<NewsView> {
 
     private INewsDetailsLoader newsDetailsLoader;
     private INewsDetailsFromDBLoader newsDetailsFromDBLoader;
-    private DisposableSingleObserver<DetailedNews> disposableSingleObserver;
 
     public NewsPresenter(NewsView view,
                          INewsDetailsLoader newsDetailsLoader,
@@ -28,23 +27,6 @@ public class NewsPresenter extends BasePresenter<NewsView> {
         super(view);
         this.newsDetailsLoader = newsDetailsLoader;
         this.newsDetailsFromDBLoader = newsDetailsFromDBLoader;
-        disposableSingleObserver = new DisposableSingleObserver<DetailedNews>() {
-            @Override
-            public void onSuccess(DetailedNews detailedNews) {
-                getView().addDetailedNewsItem(detailedNews.getRoot());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e(LOG_TAG, e.toString());
-            }
-        };
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        disposableSingleObserver.dispose();
     }
 
     public void loadDetails(String newsPath){
@@ -57,7 +39,19 @@ public class NewsPresenter extends BasePresenter<NewsView> {
                         newsDetailsFromDBLoader.saveDetailsToDb(detailedNews.getRoot());
                     }
                 })
-                .subscribe(disposableSingleObserver);
+                .subscribe(new DisposableSingleObserver<DetailedNews>() {
+                    @Override
+                    public void onSuccess(DetailedNews detailedNews) {
+                        getView().addDetailedNewsItem(detailedNews.getRoot());
+                        this.dispose();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e(LOG_TAG, e.toString());
+                        this.dispose();
+                    }
+                });
     }
 
     public void loadDetailsFromDb(String newsPath){
